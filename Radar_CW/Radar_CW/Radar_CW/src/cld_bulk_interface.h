@@ -1,0 +1,23 @@
+/*
+ * cld_bulk_interface.h
+ */
+
+#ifndef __CLD_BULK_INTERFACE_H__
+#define __CLD_BULK_INTERFACE_H__
+typedef enum
+{
+	CLD_BULK_INTERFACE_RETURN_CODE_SUCCESS = 0,
+    CLD_BULK_INTERFACE_RETURN_CODE_INIT_FAILED,
+    CLD_BULK_INTERFACE_RETURN_CODE_INIT_ONGOING,
+    CLD_BULK_INTERFACE_RETURN_CODE_CONNECTED,
+    CLD_BULK_INTERFACE_RETURN_CODE_WRITE_COMPLETE,
+    CLD_BULK_INTERFACE_RETURN_CODE_WRITE_INPROGRESS,
+    CLD_BULK_INTERFACE_RETURN_CODE_WRITE_ERROR
+} CLD_BULK_INTERFACE_RETURN_CODE;
+
+
+extern CLD_BULK_INTERFACE_RETURN_CODE bulk_usb_init( unsigned long MyObjectSizeInBytes );
+extern CLD_BULK_INTERFACE_RETURN_CODE bulk_usb_write_nonblock( void *MyObject, unsigned long MyObjectSizeInBytes );
+extern CLD_BULK_INTERFACE_RETURN_CODE bulk_usb_write_block( void *MyObject, unsigned long MyObjectSizeInBytes );
+
+#endif /* __CLD_BULK_INTERFACE_H__ */

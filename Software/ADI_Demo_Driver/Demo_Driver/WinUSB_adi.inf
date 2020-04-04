@@ -1,0 +1,142 @@
+;==========================================================
+;
+;
+;
+;  Windows USB Generic Driver
+;
+;  Note(s): (1) See msdn.microsoft.com/en-us/library/ff540283(v=VS.85).aspx
+;               for more details about Winusb.sys Installation.
+;
+;           (2) See msdn.microsoft.com/en-us/library/ff549520.aspx
+;               for more details about INF file and directives.
+;
+;           (3) This GUID value specifies the device setup class subkey
+;               in the registry HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Class
+;               tree under which to write registry information for the drivers
+;               of devices that are installed from this INF file. The class key
+;               contains for example information about how to present the device
+;               in the Device manager (e.g icon used, class group).
+;
+;           (4) This section can be changed to install later versions
+;               of WinUSB along with the corresponding KMDF version.
+;
+;           (5) This section specifies the device interface globally unique
+;               identifier (GUID) for your device.  Interface GUID will be
+;               written in a standard registry value. When Winusb.sys is loaded
+;               as the device's function driver, it reads the registry value
+;               DeviceInterfaceGUIDs key and uses the specified GUID to represent
+;               the device interface.
+;
+;           (6) See msdn.microsoft.com/en-us/library/ff540283(v=VS.85).aspx#howto
+;               for more details about WinUSB co-installer and the associated
+;               KMDF co-installer.
+;
+;           (7) x86-based and x64-based versions of Windows have separate
+;               co-installers.
+;==========================================================
+
+; =================== Version section =====================
+
+
+[Version]
+Signature = "$Windows NT$"                                      ; INF file valid for all Windows operating systems.
+Class     = MyDeviceClass                                       ; Name of the device setup class.
+ClassGuid = {89982A59-5EEA-45aa-AF97-52EC351018C2}              ; Device setup class GUID (see Note #3)
+Provider  = %ProviderName%                                      ; Identify the provider of the INF file.
+DriverVer = 04/28/2012,1.0.0.1                                  ; Driver version
+CatalogFile=WinUSB_adi.cat
+
+; ================== Class section ==================
+
+[ClassInstall32]
+Addreg=MyDeviceClassReg                                         ; Refer to defined section to modify or create registry information.
+
+[MyDeviceClassReg]                                              ; Registry information related new class creation.
+HKR,,,0,%ClassName%
+HKR,,Icon,,-1
+
+; ========== Manufacturer/Models sections ===========
+
+[Manufacturer]
+%ProviderName% = MyDevice_WinUSB,NTx86,NTamd64,NTia64
+
+[MyDevice_WinUSB.NTx86]
+%USB\MyDevice.DeviceDesc% =USB_Install, USB\VID_064B&PID_7823
+
+[MyDevice_WinUSB.NTamd64]
+%USB\MyDevice.DeviceDesc% =USB_Install, USB\VID_064B&PID_7823
+
+[MyDevice_WinUSB.NTia64]
+%USB\MyDevice.DeviceDesc% =USB_Install, USB\VID_064B&PID_7823
+
+; =================== Installation ===================
+
+[USB_Install]                                                   ; Directives only used by Windows Vista to install winusb.sys. Windows XP & 7 ignore these directives.
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[USB_Install.Services]
+Include=winusb.inf                                              ; System-supplied INF for WinUSB. winusb.inf is installed by the WinUSB co-installer.
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall              ; Winusb.sys as the device's function driver.
+
+[WinUSB_ServiceInstall]                                         ; Characteristics associated with Winusb.sys.
+DisplayName     = %WinUSB_SvcDesc%                              ; Name for the service/driver.
+ServiceType     = 1                                             ; Kernel-mode device driver.
+StartType       = 3                                             ; Driver started on demand.
+ErrorControl    = 1                                             ; If driver fails to load or initialize its device, system startup display a warning to the user.
+ServiceBinary   = %12%\winusb.sys                               ; Path of the binary for the service.
+
+[USB_Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install                              ; Install Winusb.sys as a kernel-mode service.
+
+[WinUSB_Install]                                                ; See Note #4.
+KmdfLibraryVersion = 1.9                                        ; Specifies the KMDF library version.
+
+[USB_Install.HW]
+AddReg=Dev_AddReg                                               ; Refer to defined section to modify or create registry information.
+
+[Dev_AddReg]                                                    ; Registry information related to winusb.sys (see Note #5).
+HKR,,DeviceInterfaceGUIDs, 0x10000,"{E63702F7-ADB0-4991-A6E3-A1AC0D274644}"
+
+[USB_Install.CoInstallers]
+AddReg=CoInstallers_AddReg                                      ; Refer to defined section to modify or create registry information.
+CopyFiles=CoInstallers_CopyFiles                                ; Refer to defined section to copy drivers file in a specified system folder.
+
+[CoInstallers_AddReg]                                           ; Registry information related to WinUSB co-installer and KMDF co-installer.
+HKR,,CoInstallers32,0x00010000,"WinUSBCoInstaller2.dll","WdfCoInstaller01009.dll,WdfCoInstaller"
+
+[CoInstallers_CopyFiles]                                        ; See Note #6.
+WinUSBCoInstaller2.dll                                          ; WinUSB co-installer
+WdfCoInstaller01009.dll                                         ; KMDF co-installer
+
+[DestinationDirs]
+CoInstallers_CopyFiles=11                                       ; 11 refers to sytem path %windir%\system32\. WinUSB co-installer and KMDF co-installer will be copied into this folder.
+
+
+; ================= Source Media Section =====================
+                                                                ; See Note #7.
+[SourceDisksNames]
+1 = %DISK_NAME%,,,\x86
+2 = %DISK_NAME%,,,\amd64
+3 = %DISK_NAME%,,,\ia64
+
+[SourceDisksFiles.x86]
+WinUSBCoInstaller2.dll = 1                                      ; WinUSB co-installer taken from \App\Host\OS\Windows\Vendor\INF\x86\
+WdfCoInstaller01009.dll = 1                                     ; KMDF   co-installer taken from \App\Host\OS\Windows\Vendor\INF\x86\
+
+[SourceDisksFiles.amd64]
+WinUSBCoInstaller2.dll = 2                                      ; WinUSB co-installer taken from \App\Host\OS\Windows\Vendor\INF\amd64\
+WdfCoInstaller01009.dll = 2                                     ; KMDF   co-installer taken from \App\Host\OS\Windows\Vendor\INF\amd64\
+
+[SourceDisksFiles.ia64]
+WinUSBCoInstaller2.dll = 3                                      ; WinUSB co-installer taken from \App\Host\OS\Windows\Vendor\INF\ia64\
+WdfCoInstaller01009.dll = 3                                     ; KMDF   co-installer taken from \App\Host\OS\Windows\Vendor\INF\ia64\
+
+; =================== Strings ===================
+
+[Strings]
+ProviderName            ="Analog Devices Inc."
+USB\MyDevice.DeviceDesc ="ADI Vendor Specific USB Device"
+WinUSB_SvcDesc          ="Windows USB Generic Driver"
+DISK_NAME               ="ADI Vendor Specific USB Device Installation Media"
+ClassName               ="ADI Development Tools"

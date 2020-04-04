@@ -1,0 +1,42 @@
+#-----------------------------------------------------
+# License Key
+#-----------------------------------------------------
+AddLicense('90FEFA31013C0FF7E5F57F37E17C18327E73196E6EBC448ABAFD6FD9E4F094FA')
+
+#-----------------------------------------------------
+# Set Global parameters for GUI
+#-----------------------------------------------------
+Gui_SetTitle('DemoRad 24-GHz Evaluation Software')
+Gui_SetFontSiz(16)
+Gui_SetViewIdx(1)								
+Gui_EnaViewFmcw(True)
+Gui_EnaViewRangeDoppler(True)
+Gui_EnaViewStatus(True)
+Gui_EnaViewCal(True)
+
+
+#-----------------------------------------------------
+# Set Parameters for FMCW Measurement View
+#-----------------------------------------------------
+PageFmcwCfg_SetStrtFreq(24000)						# Set Start Frequency of FMCW chirp in MHZ
+PageFmcwCfg_SetStopFreq(24300)						# Set Stop Frequency of FMCW chirp in MHZ
+PageFmcwCfg_EnaChn1(True) 							# Enable or disable channel 1
+PageFmcwCfg_EnaChn2(True) 							# Enable or disable channel 2
+PageFmcwCfg_EnaChn3(True)							# Enable or disable channel 3
+PageFmcwCfg_EnaChn4(True) 							# Enable or disable channel 4
+
+PageFmcwMeas_SetNrFrms(100000) 						# Set number of frames for FMCW measurement page (Argument positive integer)
+PageFmcwMeas_SetRMin(1) 							# Set RMin (Argument positive float)
+PageFmcwMeas_SetRMax(50.0) 							# Set RMax (Argument positive float)
+PageFmcwMeas_EnaFFT(False) 							# Enable FFT (argument True or False)
+PageFmcwMeas_EnaAverage(False) 						# Enable Average (argument True or False)
+PageFmcwMeas_SetTxCfg('TX1(100);')					# Set Tx configuration string
+
+PageFmcwTimProf_SetRMin(1) 						# Set minimal range in measurement profile
+PageFmcwTimProf_SetRMax(50) 						# Set maximal range in measurement profile
+PageFmcwTimProf_SetNrFrms(200) 						# Set number of frames for history plot
+
+# Set parameters for signal processing in FMCW mode
+PageFmcwMeas_SetFFTSiz(2048) 						# Set FFT Size
+PageFmcwMeas_SetWinType('Hanning') 					# Set Type of window: ('Hanning', 'Hamming', 'BoxCar')
+PageFmcwMeas_SetPltLineWidth(1.0) 					# Set Linewidth for plot function

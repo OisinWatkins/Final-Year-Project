@@ -1,0 +1,271 @@
+/*
+Theme Name: 	WeeklyNews Child
+Theme URI: 	http://themeforest.net/user/mip/portfolio
+Description: 	Premium News/Magazine Wordpress Template
+Author URI: 	http://themeforest.net/user/mip/portfolio
+License:        Envato Marketplaces Split Licence
+License URI:    Envato Marketplace Item License Certificate 
+Tags:           black, white, one-column, two-columns, three-columns, fixed-width, rtl, wpml, bbPress
+Template:       weeklynews
+*/
+
+#sidebar { background: #fff; }
+
+.text-right.banner-src #medg-medgadget-0{
+	display:block !important;
+}
+
+.sidebar-mid aside article img { max-width: 100%; max-height: 100px; width: auto !important; height: auto !important; display: inline-block; vertical-align: middle; }
+.sidebar-mid aside article.industry-news { margin-bottom: 10px; }
+.sidebar-mid .bx-wrapper .bx-viewport {
+	box-shadow: none;
+	border: none;
+	left: 0;
+}
+.sidebar-mid .bx-wrapper img {
+	display: inline-block;
+}
+
+.sidebar-mid aside article .title-excerpt { height: 150px; overflow: hidden; position: relative; }
+.sidebar-mid aside article .title-excerpt::after { content: ''; position: absolute; bottom: 0; left: 0; height: 64px; width: 100%; background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); }
+
+.sidebar-mid aside article span.text { line-height: 16px; font-size: 12px; display: block; }
+
+p.pagination { margin-top: 0; overflow: hidden; width: 100%; }
+p.pagination .prev-link { float: left; }
+p.pagination .next-link { float: right; }
+
+.article-post footer .author-box.medgadget { min-height: 100px; padding: 20px 30px; background: url(/wp-content/uploads/2015/07/mgg-wide.jpg) right 30% no-repeat; }
+.article-post footer .author-box.medgadget p { line-height: 100px; text-align: left; margin-bottom: 0; font-family: 'Roboto Condensed',sans-serif; }
+.article-post footer .author-box.medgadget a { font-size: 30px; color: #fff; text-decoration: none; display: block; text-shadow: 0 0 6px #4D6280; }
+.article-post footer .author-box.medgadget a:hover { opacity: 0.8; }
+
+@media screen and (max-width: 1199px) 
+	.article-post footer .author-box.medgadget { background-position: right center; }
+}
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+	.article-post footer .author-box.medgadget a { font-size: 26px; }
+}
+@media screen and (max-width: 767px) {
+	.article-post footer .author-box.medgadget { background-position: 70% center; background-size: cover; min-height: 60px; padding: 20px 15px; }
+	.article-post footer .author-box.medgadget p { line-height: 40px; }
+	.article-post footer .author-box.medgadget a { font-size: 20px; }
+}
+@media screen and (max-width: 399px) {
+	.article-post footer .author-box.medgadget a { font-size: 16px; }
+}
+@media screen and (max-width: 991px){
+	#medg-medgadget-banner{
+		margin-bottom:2em;
+		display: block;
+		text-align: center;
+	}
+	#medg-medgadget-poster{
+		margin:2em 0;
+		display: block;
+		text-align: center;
+	}
+}
+
+
+.sidebar .ad-separator .blue { color: #085693; }
+
+#header-navigation ul li.options:hover a { background-color: transparent; color: #428bca !important; }
+#header-navigation ul li.options a span.glyphicon, #header-navigation ul li.soc-media a span.glyphicon { padding-right: 8px; color: #999 !important; }
+#header-navigation ul li a, #foot-menu ul li a { font-family: "Roboto Condensed"; }
+#header-navigation ul li.main-menu-item a { font-size: 15px; }
+#page-header-mobile .row.affix { background-color: #fff; border-top: 5px solid #fff; }
+
+.article-post ul, .article-post ol { margin-bottom: 15px; }
+.article-post li { margin-bottom: 8px; margin-top: 8px; line-height: 24px; font-size: 15px; }
+
+.news-lay-3 a { color: #222; }
+.news-lay-3 a.theme { color: #fff; }
+
+.news-layout article h3 {
+	font-family: "Roboto Condensed", sans-serif;
+}
+
+.ui-datepicker {
+    background-color: white;
+}
+
+.wp-editor-container {
+    clear: both;
+    border: 1px solid #DEDEDE;
+}
+
+div.mce-panel {
+    overflow: hidden;
+}
+
+/* fix color link for my-releases page */
+.page-id-51337 .article-post-content a,.page-id-51341 .article-post-content a {
+    color: #085693;
+}
+
+.page-id-51337 .article-post-content a:hover,.page-id-51341 .article-post-content a:hover {
+    color: #085693;
+}
+/**/
+.execphpwidget article.clearfix a {
+    color: #23527c;
+}
+/**/
+h3[itemprop="name"]>a[itemprop="url"] {
+    color: #222;;
+}
+/**/
+p.soc-media-sharing.soc-style-three.press_release_pdf {
+    margin-bottom: 10px;
+    background: transparent;
+}
+
+p.soc-media-sharing.soc-style-three.press_release_pdf a.btn-social {
+    width: auto;
+    padding: 8px 15px 8px 12px;
+}
+
+p.soc-media-sharing.soc-style-three.press_release_pdf a.btn-social.btn-icon-title span {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 13px;
+    color: #fff;
+    margin-left: 12px;
+}
+
+body #header-navigation ul li a, body #header-navigation ul ul li a{
+	color:#000;
+}
+
+.article-post .breadcrumb {
+	border-radius: 0;
+	background-color: #f5f5f5;
+	padding: 8px 15px;
+	font-size: 15px;
+}
+
+
+/* change quotes on page */
+.article-post blockquote {
+    /*display: block;*/
+    /*quotes:  "\201c" "\201d";*/
+}
+
+.article-post blockquote:before {
+    content: none !important;
+}
+
+.article-post blockquote:after {
+    content: none !important;
+}
+
+/* old image positioning CSS */
+.article-post img.bside {
+    padding: 8px;
+    border: 1px solid #BFD9E5;
+    background-color: white;
+    float: right;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px; }
+
+.article-post img.side {
+    padding: 8px;
+    border: 0;
+    background-color: white;
+    float: right;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px; }
+
+.article-post img.cntr {
+    margin: 0px auto 0px 43px;
+    border: 0; }
+
+.article-post img.bcntr {
+    padding: 8px;
+    border: 1px solid #BFD9E5;
+    background-color: white;
+    margin: 0px auto 0px 43px; }
+/* end old image positioning CSS */
+
+.linkbox-sub .theme {
+	top: 0;
+}
+body.home #main .linkbox > a:first-child {
+    position: relative;
+    display: block;
+}
+
+.orangebutton {
+	text-align: center;
+	margin-top: 20px;
+	background-color: #FF7400;
+	display: block; 
+	color: #fff;
+}
+.orangebutton:hover {
+	background-color: #dd6500;
+}
+.orangebutton:active {
+	position: relative;
+	top: 2px;
+}
+.orangebutton a {
+	padding: 10px 15px; 
+	color: #fff;
+	display: block;
+}
+.orangebutton:hover a, .orangebutton:focus a, .orangebutton:active a {
+	text-decoration: none;
+}
+
+article.thumb-lay-one {
+	margin-top: 24px;
+}
+
+article.thumb-lay-one div.articletop {
+	border-top: 1px solid #e3e3e3;
+}
+
+article.thumb-lay-one div.articletop h3 {
+	margin-top: 24px;
+	/*margin-top: 15px;*/
+	margin-bottom: 8px;
+	font-size: 22px;
+	line-height: 25px;
+}
+
+.bottom-margin.thumbrow, article.firstpostthumb {
+	margin-bottom: 5px !important;
+}
+
+article span.published {
+	display: inline;
+}
+
+.articletop {
+	margin-bottom: 12px;
+}
+
+article span.published span.icon {
+	margin-right: 7px;
+}
+
+@media screen and (max-width: 767px) {
+    .news-lay-3 .row > .col-xs-6:nth-child(3) {
+        display: none;
+    }
+}
+
+body .ad-above-bg {
+    background-color: #fff;
+}
+
+.article span.text{
+	font-size: 14px;
+    line-height: 20px;
+    color: #5c5c5c;
+    font-family: 'Roboto';
+}

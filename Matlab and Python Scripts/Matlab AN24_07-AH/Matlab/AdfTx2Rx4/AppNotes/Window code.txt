@@ -1,0 +1,41 @@
+% Define windows => Decided that windowing the data may not be necessary,
+% compare entire data set
+% lower_Lim = zeros(1,length(Window_Centers));
+% upper_Lim = zeros(1,length(Window_Centers));
+% 
+% for i = 1:length(Window_Centers)
+%     lower_Lim(i) = Window_Centers(i) - (Window_Width/2);
+%     upper_Lim(i) = Window_Centers(i) + (Window_Width/2);
+% end
+
+
+------------------------------------------------------------------------------------------------------------------------------
+Error codes from Ching's code
+------------------------------------------------------------------------------------------------------------------------------
+
+Cannot find an exact (case-sensitive) match for 'dB'
+
+The closest match is: db in C:\Program Files\MATLAB\R2017b\toolbox\signal\signal\db.m
+
+
+Error in dBplot (line 12)
+   plot(dB(H));
+
+Error in FFT_sort_and_reconstruction_v5 (line 99)
+dBplot(abs(Y(fdisplay)));
+
+Current plot held
+Cannot find an exact (case-sensitive) match for 'dbplot'
+
+The closest match is: dBplot in C:\Users\Oisin Watkins\Desktop\FYP\Contactless HR\Matlab and Python Scripts\Matlab AN24_07-AH\Matlab\AdfTx2Rx4\AppNotes\dBplot.m
+
+
+Error in FFT_sort_and_reconstruction_v5 (line 165)
+dbplot(abs(Yn(fdisplay))); % fft of Yn
+
+Undefined function or variable 'Yn_filt_sort'.
+
+Error in FFT_sort_and_reconstruction_v5 (line 226)
+test_abs = abs(Yn_filt_sort);
+
+>> 

@@ -1,0 +1,116 @@
+/* CSS Document */
+
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+	margin-bottom:1em;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+
+
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+
+.updated{
+padding:0 1em;background:#f9f9f9;border:1px solid #ED1D25;margin-bottom:1em;	
+}
+
+.thefirst .thumb{
+	display:none;	
+}
+
+li.readonly{display:none;}
+
+.press_sub{
+	width:50%;
+	float:left;	
+}
+
+.pressbox{
+	margin-left:10px;
+	text-align:center; 
+	float:right;
+	padding:5px 10px;
+	background:3f9f9f9;
+	border:1px solid #ccc;
+	position:relative;	
+}
+
+.pressbox span.tooltips{
+float: left;
+border: 1px solid #ccc;
+padding: 0 5px;
+color: #666;
+/* border-radius: 10px; */
+font-size: 11px !important;
+line-height: 15px;
+position: absolute;
+left: -1px;
+bottom: -1px;	
+}
+
+.presstitle{font-size:12px;}
+
+.pressnumber{font-size:24px;}
+
+.pressnumber.infin{font-size:32px;}
+
+.pressnumber.infin small{
+	    font-size: 10px;
+    line-height: 30px;
+    display: table-cell;
+    vertical-align: middle;
+    float: right;
+    padding-right: 8px;
+	}
+
+.pressinfo{
+	font-size:12px;
+	clear:both;
+}
+
+.presslinks{
+	clear:both;
+	padding-bottom:10px;	
+	text-align:right;
+	font-size:12px;
+}
+#release-table{margin-top:20px;}
+#release-table th{padding-left:10px;}

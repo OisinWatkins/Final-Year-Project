@@ -1,0 +1,961 @@
+/*
+** ADSP-BF706 linker description file generated on Oct 09, 2017 at 11:10:05.
+*/
+/*
+** Copyright (C) 2000-2017 Analog Devices Inc., All Rights Reserved.
+**
+** This file is generated automatically based upon the options selected
+** in the System Configuration utility. Changes to the LDF configuration
+** should be made by modifying the appropriate options rather than editing
+** this file. To access the System Configuration utility, double-click the
+** system.svc file from a navigation view.
+**
+** Custom additions can be inserted within the user-modifiable sections,
+** these are bounded by comments that start with "$VDSG". Only changes
+** placed within these sections are preserved when this file is re-generated.
+**
+** Product      : CrossCore Embedded Studio
+** Tool Version : 6.0.9.0
+*/
+
+ARCHITECTURE(ADSP-BF706)
+
+
+#if !defined(NO_UTILITY_ROM)
+# if !defined(__SILICON_REVISION__) || (__SILICON_REVISION__==0xffff)
+#   warning \
+    The Utility ROM will not be used to link this application because \
+the silicon revision does not specify a specific revision number. This message \
+may be suppressed by defining the LDF macro NO_UTILITY_ROM.
+#   define NO_UTILITY_ROM
+# endif
+#endif
+
+/*
+** Define a linked objects list.
+*/
+$OBJECTS = 
+    "app_startup.doj"
+
+/*$VDSG<insert-user-objects-at-beginning>                       */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-user-objects-at-beginning>                       */
+
+   ,$COMMAND_LINE_OBJECTS
+   ,"app_cplbtab.doj"
+
+/*$VDSG<insert-user-objects-at-end>                             */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-user-objects-at-end>                             */
+
+   ,crtn.doj
+   ;
+
+/*
+** Define a linked library list.
+*/
+$LIBRARIES = 
+
+/*$VDSG<insert-user-libraries-at-beginning>                     */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-user-libraries-at-beginning>                     */
+
+    libcc.dlb
+   ,libio.dlb
+   ,libc.dlb
+   ,librt_fileio.dlb
+   ,libcpp.dlb
+   ,libdsp.dlb
+   ,libetsi.dlb
+   ,libssl.dlb
+   ,libdrv.dlb
+   ,libldr.dlb
+   ,libdyn.dlb
+   ,libsmall.dlb
+   ,libevent.dlb
+   ,libprofile.dlb
+   ,libosal_noos.dlb
+
+/*$VDSG<insert-user-libraries-at-end>                           */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-user-libraries-at-end>                           */
+
+   ;
+
+/*
+** List of all objects and libraries.
+*/
+$OBJS_LIBS = $OBJECTS, $LIBRARIES;
+
+/*
+** List of objects and libraries which prefer internal memory as
+** specified by prefersMem attribute.
+*/
+$OBJS_LIBS_INTERNAL = 
+
+/*$VDSG<insert-libraries-internal>                              */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-libraries-internal>                              */
+
+    $OBJS_LIBS{prefersMem("internal")}
+
+/*$VDSG<insert-libraries-internal-end>                          */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-libraries-internal-end>                          */
+
+   ;
+
+/*
+** List of objects and libraries which don't have a preference for
+** external memory as specified by prefersMem attribute.
+*/
+$OBJS_LIBS_NOT_EXTERNAL = 
+
+/*$VDSG<insert-libraries-not-external>                          */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-libraries-not-external>                          */
+
+    $OBJS_LIBS{!prefersMem("external")}
+
+/*$VDSG<insert-libraries-not-external-end>                      */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-libraries-not-external-end>                      */
+
+   ;
+
+/*
+** Determine which start label to use and its location
+*/
+
+/*$VDSG<insert-user-macros>                                     */
+/* Text inserted between these $VDSG comments will be preserved */
+/*$VDSG<insert-user-macros>                                     */
+
+#if !defined(START_ADDR)
+#define START_ADDR  0x11A00000 /* reset address */
+#endif
+#if !defined(START_SYM)
+  #define START_SYM start
+#endif
+
+
+MEMORY
+{
+   /*
+   ** Memory map.
+   **
+   ** DMC            N/A
+   ** SMC block 0    0x7000_0000  0x7000_1FFF    8 KB
+   ** SMC block 1    0x7400_0000  0x7400_1FFF    8 KB
+   ** SPI Flash      0x4000_0000  0x47FF_FFFF  128 MB
+   ** OTP            0x3800_0000  0x3800_0FFF    4 KB
+   ** System MMRs    0x2000_0000  0x2FFF_FFFF  256 MB
+   ** Core MMRs      0x1FC0_0000  0x1FFF_FFFF    4 MB
+   **
+   ** Data Block C   0x11B0_0000  0x11B0_1FFF    8 KB  SRAM
+   ** Instruction    0x11A0_C000  0x11A0_FFFF   16 KB  SRAM/CACHE
+   ** Instruction    0x11A0_0000  0x11A0_BFFF   48 KB  SRAM
+   ** Data Block B   0x1190_4000  0x1190_7FFF   16 KB  SRAM/CACHE
+   ** Data Block B   0x1190_0000  0x1190_3FFF   16 KB  SRAM
+   ** Data Block A   0x1180_4000  0x1180_7FFF   16 KB  SRAM/CACHE
+   ** Data Block A   0x1180_0000  0x1180_3FFF   16 KB  SRAM
+   **
+   ** L2 SRAM        0x0800_0000  0x080F_FFFF    1 MB
+   ** L2 ROM         0x0401_0000  0x0407_FFFF  448 KB
+   ** L2 BOOT ROM    0x0400_0000  0x0400_FFFF   64 KB
+   **
+   */
+
+   /*
+   ** L1 memory.
+   */
+   MEM_L1_DATA_C           { TYPE(RAM) START(0x11B00000) END(0x11B01FFF) WIDTH(8) }
+   MEM_L1_CODE_CACHE       { TYPE(RAM) START(0x11A0C000) END(0x11A0FFFF) WIDTH(8) }
+   MEM_L1_CODE             { TYPE(RAM) START(0x11A00000) END(0x11A0BFFF) WIDTH(8) }
+   MEM_L1_DATA_B           { TYPE(RAM) START(0x11900000) END(0x11907FFF) WIDTH(8) }
+   MEM_L1_DATA_A           { TYPE(RAM) START(0x11800000) END(0x11807FFF) WIDTH(8) }
+
+   /*
+   ** L2 memory.
+   */
+   MEM_L2_SCRATCH          { TYPE(RAM) START(0x08000000) END(0x08001FFF) WIDTH(8) }
+//   MEM_L2_SRAM             { TYPE(RAM) START(0x08002000) END(0x080EFFFF) WIDTH(8) }
+//   MEM_L2_SRAM_UNCACHED    { TYPE(RAM) START(0x080F0000) END(0x080FFFFF) WIDTH(8) }
+   MEM_L2_ROM              { TYPE(ROM) START(0x04010000) END(0x0407FFFF) WIDTH(8) }
+   MEM_SPI_FLASH           { TYPE(RAM) START(0x40000000) END(0x47FFFFFF) WIDTH(8) }
+
+   /*
+   ** Static Memory Controller (SMC) memory.
+   **
+   ** The SMC can be programmed to control up to two blocks of external
+   ** memories or memory-mapped devices. Each block is a 8K byte segment.
+   */
+   MEM_SMC_0               { TYPE(RAM) START(0x70000000) END(0x70001FFF) WIDTH(8) }
+   MEM_SMC_1               { TYPE(RAM) START(0x74000000) END(0x74001FFF) WIDTH(8) }
+   
+   /*$VDSG<insert-new-memory-segments>                          */
+   MEM_L2_SRAM             { TYPE(RAM) START(0x08002000) END(0x0801FFFF) WIDTH(8) }
+   MEM_L2_SRAM_UNCACHED    { TYPE(RAM) START(0x080E0000) END(0x080FFFFF) WIDTH(8) }
+   MEM_L2_SRAM_PING        { TYPE(RAM) START(0x08020000) END(0x0807FFFF) WIDTH(8) }
+   MEM_L2_SRAM_PONG        { TYPE(RAM) START(0x08080000) END(0x080DFFFF) WIDTH(8) }
+   /*$VDSG<insert-new-memory-segments>                          */
+   
+} /* MEMORY */
+
+PROCESSOR P0
+{
+   OUTPUT($COMMAND_LINE_OUTPUT_FILE)
+   RESOLVE(START_SYM, START_ADDR)
+   KEEP(START_SYM, _main)
+   
+   /*$VDSG<insert-user-utility-rom-start>                       */
+   /* Text inserted between these $VDSG comments will be preserved */
+   /*$VDSG<insert-user-utility-rom-start>                       */
+   
+ #if !defined(NO_UTILITY_ROM)
+   #include "ADSP-BF707-LDF.h"
+ #endif
+
+   
+   /*$VDSG<insert-user-utility-rom-end>                         */
+   /* Text inserted between these $VDSG comments will be preserved */
+   /*$VDSG<insert-user-utility-rom-end>                         */
+   
+   
+   /*$VDSG<insert-user-ldf-commands>                            */
+   /* Text inserted between these $VDSG comments will be preserved */
+   /*$VDSG<insert-user-ldf-commands>                            */
+   
+   SECTIONS
+   {
+      
+      /*$VDSG<insert-new-sections-at-the-start>                 */
+      /* Text inserted between these $VDSG comments will be preserved */
+      /*$VDSG<insert-new-sections-at-the-start>                 */
+      
+      #define DEF_SECTION_QUAL /* None, rely on load-time initialization. */
+      /*
+      ** Input sections to the L1 instruction memory.
+      */
+      L1_code DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<insert-input-sections-at-the-start-of-l1_code>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-start-of-l1_code>  */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L1_code cplb_code cplb noncache_code) )
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(program) )
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(program) )
+         INPUT_SECTIONS( $OBJS_LIBS(program) )
+         
+         /*$VDSG<insert-input-sections-at-the-end-of-l1_code>   */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-end-of-l1_code>   */
+         
+      } > MEM_L1_CODE
+      
+      L1_code_cache NO_INIT
+      {
+         ___l1_code_cache = 1;  /* Instruction cache is enabled. */
+      } > MEM_L1_CODE_CACHE
+      
+      
+      /*$VDSG<insert-new-sections-after-L1_CODE>                */
+      /* Text inserted between these $VDSG comments will be preserved */
+      /*$VDSG<insert-new-sections-after-L1_CODE>                */
+      
+      /*
+      ** Input sections to the L1 data C memory.
+      */
+      /* First input data that only gets mapped to internal memory. */
+      L1_data_c_prio0 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_generaldata_prio0>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_generaldata_prio0>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L1_data_c L1_data) )
+      } > MEM_L1_DATA_C
+      
+      /* Next input sections that have initialization qualifiers and are only
+      ** mapped to internal memory.
+      */
+      L1_data_c_no_init_prio0 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_noinit_data_prio0>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_noinit_data_prio0>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L1_scratchpad L1_noinit_data_c L1_noinit_data) )
+      } > MEM_L1_DATA_C
+      
+      L1_data_c_bsz_prio0 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_bszdata_prio0>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_bszdata_prio0>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L1_bsz_c L1_bsz) )
+      } > MEM_L1_DATA_C
+      
+      /* Next input sections that contain data for objects that should
+      ** preferably end up in internal memory.
+      */
+      L1_data_c_prio1 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_generaldata_prio1>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_generaldata_prio1>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(data1 voldata vtbl constdata) )
+      } > MEM_L1_DATA_C
+      
+      L1_data_c_bsz_prio1 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_bszdata_prio1>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_bszdata_prio1>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(bsz) )
+      } > MEM_L1_DATA_C
+      
+      L1_data_c_no_init_prio1 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_noinit_data_prio1>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_noinit_data_prio1>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(noinit_data) )
+      } > MEM_L1_DATA_C
+      
+      /* Next input sections that contain data for objects that we don't
+      ** preferably want to end up in external memory.
+      */
+      L1_data_c_prio2 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_generaldata_prio2>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_generaldata_prio2>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(data1 voldata vtbl constdata) )
+      } > MEM_L1_DATA_C
+      
+      L1_data_c_bsz_prio2 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_bszdata_prio2>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_bszdata_prio2>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(bsz) )
+      } > MEM_L1_DATA_C
+      
+      L1_data_c_no_init_prio2 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_noinit_data_prio2>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_noinit_data_prio2>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(noinit_data) )
+      } > MEM_L1_DATA_C
+      
+      /* Next use any unused memory for any remaining unmapped inputs. */
+      L1_data_c_prio3 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_generaldata_prio3>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_generaldata_prio3>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(data1 voldata cplb_data vtbl constdata .edt .cht .rtti) )
+      } > MEM_L1_DATA_C
+      
+      L1_data_c_bsz_prio3 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_bszdata_prio3>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_bszdata_prio3>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(bsz) )
+      } > MEM_L1_DATA_C
+      
+      L1_data_c_no_init_prio3 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_c_noinit_data_prio3>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_c_noinit_data_prio3>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(noinit_data) )
+      } > MEM_L1_DATA_C
+      
+      
+      /*$VDSG<insert-new-sections-after-L1_DATA_C>              */
+      /* Text inserted between these $VDSG comments will be preserved */
+      /*$VDSG<insert-new-sections-after-L1_DATA_C>              */
+      
+      /*
+      ** Input sections to the L1 data B memory.
+      */
+      /* First input data that only gets mapped to internal memory. */
+      L1_data_b_prio0 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_generaldata_prio0>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_generaldata_prio0>    */
+         
+         ___l1_data_cache_b = 0; /* DATA B cache is not enabled */
+         RESERVE(heaps_and_stack_in_L1_data_b, heaps_and_stack_in_L1_data_b_length = 4096, 4)
+         INPUT_SECTIONS( $OBJS_LIBS(L1_data_b L1_data) )
+      } > MEM_L1_DATA_B
+      
+      /* Next input sections that have initialization qualifiers and are only
+      ** mapped to internal memory.
+      */
+      L1_data_b_bsz_prio0 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_bszdata_prio0>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_bszdata_prio0>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L1_bsz_b L1_bsz) )
+      } > MEM_L1_DATA_B
+      
+      L1_data_b_no_init_prio0 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_noinit_data_prio0>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_noinit_data_prio0>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L1_noinit_data_b L1_noinit_data) )
+      } > MEM_L1_DATA_B
+      
+      /* Next input sections that contain data for objects that should
+      ** preferably end up in internal memory.
+      */
+      L1_data_b_prio1 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_generaldata_prio1>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_generaldata_prio1>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(data1 voldata vtbl constdata) )
+      } > MEM_L1_DATA_B
+      
+      L1_data_b_bsz_prio1 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_bszdata_prio1>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_bszdata_prio1>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(bsz) )
+      } > MEM_L1_DATA_B
+      
+      L1_data_b_no_init_prio1 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_noinit_data_prio1>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_noinit_data_prio1>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(noinit_data) )
+      } > MEM_L1_DATA_B
+      
+      /* Next input sections that contain data for objects that we don't
+      ** preferably want to end up in external memory.
+      */
+      L1_data_b_prio2 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_generaldata_prio2>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_generaldata_prio2>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(data1 voldata vtbl constdata) )
+      } > MEM_L1_DATA_B
+      
+      L1_data_b_bsz_prio2 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_bszdata_prio2>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_bszdata_prio2>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(bsz) )
+      } > MEM_L1_DATA_B
+      
+      L1_data_b_no_init_prio2 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_noinit_data_prio2>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_noinit_data_prio2>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(noinit_data) )
+      } > MEM_L1_DATA_B
+      
+      /* Next use any unused memory for any remaining unmapped inputs. */
+      L1_data_b_prio3 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_generaldata_prio3>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_generaldata_prio3>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(data1 voldata cplb_data vtbl constdata .edt .cht .rtti) )
+      } > MEM_L1_DATA_B
+      
+      L1_data_b_bsz_prio3 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_bszdata_prio3>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_bszdata_prio3>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(bsz) )
+      } > MEM_L1_DATA_B
+      
+      L1_data_b_no_init_prio3 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_b_noinit_data_prio3>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_b_noinit_data_prio3>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(noinit_data) )
+      } > MEM_L1_DATA_B
+      
+      L1_data_b_stack_heap NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<insert-input-sections-at-the-start-of-L1_data_b_stack_heap>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-start-of-L1_data_b_stack_heap>  */
+         
+         RESERVE_EXPAND(heaps_and_stack_in_L1_data_b, heaps_and_stack_in_L1_data_b_length, 0, 4)
+         ldf_heap_space = heaps_and_stack_in_L1_data_b;
+         ldf_heap_end = (ldf_heap_space + (heaps_and_stack_in_L1_data_b_length - 4)) & 0xfffffffc;
+         ldf_heap_length = ldf_heap_end - ldf_heap_space;
+      } > MEM_L1_DATA_B
+      
+      
+      /*$VDSG<insert-new-sections-after-L1_DATA_B>              */
+      /* Text inserted between these $VDSG comments will be preserved */
+      /*$VDSG<insert-new-sections-after-L1_DATA_B>              */
+      
+      /*
+      ** Input sections to the L1 data A memory.
+      */
+      /* First input data that only gets mapped to internal memory. */
+      L1_data_a_prio0 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_generaldata_prio0>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_generaldata_prio0>    */
+         
+         ___l1_data_cache_a = 0; /* DATA A cache is not enabled */
+         RESERVE(heaps_and_stack_in_L1_data_a, heaps_and_stack_in_L1_data_a_length = 4096, 4)
+         INPUT_SECTIONS( $OBJS_LIBS(L1_data_a L1_data) )
+      } > MEM_L1_DATA_A
+      
+      /* Next input sections that have initialization qualifiers and are only
+      ** mapped to internal memory.
+      */
+      L1_data_a_bsz_prio0 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_bszdata_prio0>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_bszdata_prio0>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L1_bsz_a L1_bsz) )
+      } > MEM_L1_DATA_A
+      
+      L1_data_a_no_init_prio0 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_noinit_data_prio0>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_noinit_data_prio0>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L1_noinit_data_a L1_noinit_data) )
+      } > MEM_L1_DATA_A
+      
+      /* Next input sections that contain data for objects that should
+      ** preferably end up in internal memory.
+      */
+      L1_data_a_prio1 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_generaldata_prio1>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_generaldata_prio1>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(data1 voldata vtbl constdata) )
+      } > MEM_L1_DATA_A
+      
+      L1_data_a_bsz_prio1 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_bszdata_prio1>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_bszdata_prio1>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(bsz) )
+      } > MEM_L1_DATA_A
+      
+      L1_data_a_no_init_prio1 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_noinit_data_prio1>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_noinit_data_prio1>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_INTERNAL(noinit_data) )
+      } > MEM_L1_DATA_A
+      
+      /* Next input sections that contain data for objects that we don't
+      ** preferably want to end up in external memory.
+      */
+      L1_data_a_prio2 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_generaldata_prio2>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_generaldata_prio2>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(data1 voldata vtbl constdata) )
+      } > MEM_L1_DATA_A
+      
+      L1_data_a_bsz_prio2 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_bszdata_prio2>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_bszdata_prio2>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(bsz) )
+      } > MEM_L1_DATA_A
+      
+      L1_data_a_no_init_prio2 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_noinit_data_prio2>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_noinit_data_prio2>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS_NOT_EXTERNAL(noinit_data) )
+      } > MEM_L1_DATA_A
+      
+      /* Next use any unused memory for any remaining unmapped inputs. */
+      L1_data_a_prio3 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_generaldata_prio3>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_generaldata_prio3>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(data1 voldata cplb_data vtbl constdata .edt .cht .rtti) )
+      } > MEM_L1_DATA_A
+      
+      L1_data_a_bsz_prio3 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_bszdata_prio3>        */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_bszdata_prio3>        */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(bsz) )
+      } > MEM_L1_DATA_A
+      
+      L1_data_a_no_init_prio3 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L1_data_a_noinit_data_prio3>    */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L1_data_a_noinit_data_prio3>    */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(noinit_data) )
+      } > MEM_L1_DATA_A
+      
+      L1_data_a_stack_heap NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<insert-input-sections-at-the-start-of-L1_data_a_stack_heap>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-start-of-L1_data_a_stack_heap>  */
+         
+         RESERVE_EXPAND(heaps_and_stack_in_L1_data_a, heaps_and_stack_in_L1_data_a_length, 0, 4)
+         ldf_stack_space = heaps_and_stack_in_L1_data_a;
+         ldf_stack_end = (ldf_stack_space + (heaps_and_stack_in_L1_data_a_length - 4)) & 0xfffffffc;
+      } > MEM_L1_DATA_A
+      
+      
+      /*$VDSG<insert-new-sections-after-L1_DATA_A>              */
+      /* Text inserted between these $VDSG comments will be preserved */
+      /*$VDSG<insert-new-sections-after-L1_DATA_A>              */
+      
+
+      /*
+      ** Input sections to L2 scratchpad memory. 
+      ** This memory must not contain initialized code or data as it's used by
+      ** the boot code.
+      */
+      L2_scratchpad NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<insert-input-sections-at-the-start-of-L2-scratchpad>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-start-of-L2-scratchpad>  */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L2_scratchpad) )
+         
+         /*$VDSG<insert-input-sections-at-the-end-of-L2-scratchpad>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-end-of-L2-scratchpad>  */
+         
+      } > MEM_L2_SCRATCH
+      
+      L2_scratchpad_stack_heap NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<insert-input-sections-at-the-start-of-L2-scratchpad_stack_heap>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-start-of-L2-scratchpad_stack_heap>  */
+         
+      } > MEM_L2_SCRATCH
+      
+      
+      /*$VDSG<insert-new-sections-after-L2-SCRATCH>             */
+      /* Text inserted between these $VDSG comments will be preserved */
+      /*$VDSG<insert-new-sections-after-L2-SCRATCH>             */
+      
+      /*
+      ** Input sections to the L2 SRAM memory.
+      */
+      /* First input the lists for C++ support that must be mapped
+      ** contiguously into memory.
+      */
+      L2_tables DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         FORCE_CONTIGUITY
+         
+         /*$VDSG<insert-input-sections-at-the-start-of-L2_tables>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-start-of-L2_tables>  */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(ctor) )   /* global C++ constructors list */
+         INPUT_SECTIONS( $OBJS_LIBS(ctorl) )  /* NULL terminator for ctor     */
+         INPUT_SECTIONS( $OBJS_LIBS(.gdt) )   /* C++ exceptions data          */
+         INPUT_SECTIONS( $OBJS_LIBS(.gdtl) )  /* NULL terminator for .gdt     */
+         
+         /*$VDSG<insert-input-sections-at-the-end-of-L2_tables>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-end-of-L2_tables>  */
+         
+      } > MEM_L2_SRAM
+      
+      L2_bsz_prio0 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L2_bszdata_prio0>               */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L2_bszdata_prio0>               */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L2_bsz) )
+      } > MEM_L2_SRAM
+      
+      L2_no_init_prio0 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L2_noinit_data_prio0>           */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L2_noinit_data_prio0>           */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L2_noinit_data) )
+      } > MEM_L2_SRAM
+      
+      L2_prio0 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L2_prio0>                       */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L2_prio0>                       */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(L2_sram l2_sram) )
+         EXECUTABLE_NAME(__executable_name)
+      } > MEM_L2_SRAM
+      
+      /* Next use any unused memory for any remaining unmapped inputs. */
+      L2_bsz_prio3 ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L2_bszdata_prio3>               */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L2_bszdata_prio3>               */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(bsz) )
+      } > MEM_L2_SRAM
+      
+      L2_no_init_prio3 NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L2_noinit_data_prio3>           */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L2_noinit_data_prio3>           */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(noinit_data) )
+      } > MEM_L2_SRAM
+      
+      L2_prio3 DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<input-sections-L2_general_prio3>               */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<input-sections-L2_general_prio3>               */
+         
+         INPUT_SECTIONS( $OBJS_LIBS(program noncache_code data1 voldata cplb_data vtbl constdata .edt .cht .rtti) )
+      } > MEM_L2_SRAM
+      
+      L2_sram_stack_heap NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<insert-input-sections-at-the-start-of-L2_sram_stack_heap>  */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<insert-input-sections-at-the-start-of-L2_sram_stack_heap>  */
+         
+      } > MEM_L2_SRAM
+      
+      L2_uncached DEF_SECTION_QUAL
+      {
+         INPUT_SECTION_ALIGN(4)
+         INPUT_SECTIONS( $OBJS_LIBS(L2_sram_uncached) )
+         INPUT_SECTIONS( $OBJS_LIBS(program noncache_code cplb_code cplb data1 voldata cplb_data vtbl constdata .edt .cht .rtti) )
+      } > MEM_L2_SRAM_UNCACHED
+      
+      L2_uncached_no_init NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         INPUT_SECTIONS( $OBJS_LIBS(L2_noinit_data noinit_data) )
+      } > MEM_L2_SRAM_UNCACHED
+      
+      L2_uncached_bsz ZERO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         INPUT_SECTIONS( $OBJS_LIBS(L2_bsz bsz) )
+      } > MEM_L2_SRAM_UNCACHED
+      
+      
+      /*$VDSG<insert-new-sections-after-MEM_L2_SRAM>            */
+      L2_no_init_ping NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         INPUT_SECTIONS( $OBJS_LIBS(ping_data) )
+      } > MEM_L2_SRAM_PING
+
+      L2_no_init_pong NO_INIT
+      {
+         INPUT_SECTION_ALIGN(4)
+         INPUT_SECTIONS( $OBJS_LIBS(pong_data) )
+      } > MEM_L2_SRAM_PONG
+
+      /*$VDSG<insert-new-sections-after-MEM_L2_SRAM>            */
+      
+      
+      /*$VDSG<insert-new-sections-after-SDRAM>                  */
+      /* Text inserted between these $VDSG comments will be preserved */
+      /*$VDSG<insert-new-sections-after-SDRAM>                  */
+      
+      smc_block0
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<user-additions-for-smc_block0>                 */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<user-additions-for-smc_block0>                 */
+         
+      } > MEM_SMC_0
+      
+      smc_block1
+      {
+         INPUT_SECTION_ALIGN(4)
+         
+         /*$VDSG<user-additions-for-smc_block1>                 */
+         /* Text inserted between these $VDSG comments will be preserved */
+         /*$VDSG<user-additions-for-smc_block1>                 */
+         
+      } > MEM_SMC_1
+      
+      
+      /*$VDSG<insert-new-sections-at-the-end>                   */
+      /* Text inserted between these $VDSG comments will be preserved */
+      /*$VDSG<insert-new-sections-at-the-end>                   */
+      
+   } /* SECTIONS */
+} /* P0 */
+

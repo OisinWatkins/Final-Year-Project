@@ -1,0 +1,15 @@
+var frontIndustryNews;
+
+jQuery(function($){
+	frontIndustryNews = $('.bxslider.front-industry-news').bxSlider({
+		mode: 'vertical',
+		minSlides: 3,
+		maxSlides: 3,
+		slideMargin: 5,
+		controls: false, 
+		pager: false,
+		auto: true,
+		pause: 8000,
+		infiniteLoop : true
+	});
+});

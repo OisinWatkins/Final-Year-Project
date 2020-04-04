@@ -1,0 +1,38 @@
+// custom.js
+jQuery(function($) {
+	
+    $('.submitcancel').on("click", function (e) {
+        var link = this;
+
+        e.preventDefault();
+
+        $('.unique').dialog({
+            buttons: {
+                "Ok": function () {     		
+					
+                    $(this).dialog("close");
+					 $('form.cancelplan').submit();
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+	
+	
+	
+	
+	
+}); 
+
+jQuery( document ).ready(function($) {
+    $(".updated").delay(5000).fadeOut("slow");
+	$('.viewplan').on("click", function (e) {
+      // alert($(this).text());
+        e.preventDefault();
+
+        $('.gridtable').slideToggle({});
+		 $(this).text( $(this).text() == 'View Plan' ? "Hide Plan" : "View Plan");
+    });
+});

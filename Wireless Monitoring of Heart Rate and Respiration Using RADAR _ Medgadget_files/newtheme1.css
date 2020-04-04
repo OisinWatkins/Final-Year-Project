@@ -1,0 +1,136 @@
+.snp-newtheme1 {
+  background: url('../img/bg.jpg') no-repeat scroll 50% 50% transparent;
+  font-family: Arial;
+  font-weight: 400;
+  width: 460px;
+  padding-top: 150px;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.snp-newtheme1 .snp-newsletter-content {
+  background: rgba(48, 20, 28, 0.7);
+  overflow: hidden;
+}
+.snp-newtheme1 .snp-newsletter-content h2 {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 15px 0;
+  position: relative;
+}
+.snp-newtheme1 .snp-newsletter-content h2:before {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: 0;
+  height: 4px;
+  background-color: #ff5611;
+  content: ' ';
+}
+.snp-newtheme1 .snp-newsletter-content p {
+  color: #fff;
+  text-align: center;
+  margin: 16px 0;
+}
+.snp-newtheme1 .snp-newsletter-content p small {
+  font-size: 12px;
+}
+.snp-newtheme1 .snp-newsletter-content p img {
+  vertical-align: middle;
+  margin-top: -4px;
+  margin-right: 5px;
+}
+.snp-newtheme1 form div {
+  padding: 0 30px;
+}
+.snp-newtheme1 form input[type="text"],.snp-newtheme1 form select,.snp-newtheme1 form textarea,
+.snp-newtheme1 form input[type="text"]:focus ,.snp-newtheme1 form select:focus ,.snp-newtheme1 form textarea:focus {
+  height: auto;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 0;
+  font-family: Arial, sans-serif;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  border: 1px solid #ff5611;
+  text-align: left;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  margin-bottom: 20px;
+}
+.snp-newtheme1 form select option{
+    background: #fff;
+    color: #000;
+}
+
+.snp-newtheme1 .snp-error {
+    color: #CC0000 !important;
+    border: 1px solid #CC0000 !important;
+}
+.snp-newtheme1 .snp-error::-webkit-input-placeholder { color: #CC0000; }
+.snp-newtheme1 input.snp-error:-moz-placeholder { color: #515151; }
+.snp-newtheme1 .snp-error.placeholder { color: #515151; }
+
+
+.snp-newtheme1 form input[type="submit"] {
+  background: #ff4300;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px 25px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 0;
+  display: block;
+  width: 200px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin: 0 auto;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  border-radius: 0px;	
+  -moz-border-radius: 0px;	
+  -webkit-border-radius: 0px;	
+}
+.snp-newtheme1 form input[type="submit"]:hover {
+  background: #bebebe;
+}
+.snp-newtheme1 .snp-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: url('../img/close.png') no-repeat scroll 0 0 transparent;
+  cursor: pointer;
+}
+.snp-pop-newtheme1-wrap .fancybox-close {
+    display: none;
+}
+
+
+@media (max-width: 700px) {
+  .snp-newtheme1 {
+    width: 460px;
+  }
+}
+
+@media (max-width: 460px) {
+  .snp-newtheme1 {
+    width: auto;
+    max-width: 100%;
+  }
+}
